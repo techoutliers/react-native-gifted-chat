@@ -318,7 +318,7 @@ export default class MessageContainer<
     if (
       infiniteScroll &&
       (this.state.hasScrolled || distanceFromEnd > 0) &&
-      distanceFromEnd <= 100 &&
+      distanceFromEnd <= 500 &&
       loadEarlier &&
       onLoadEarlier &&
       !isLoadingEarlier &&
@@ -342,6 +342,10 @@ export default class MessageContainer<
           ? this.renderScrollToBottomWrapper()
           : null}
         <FlatList
+          removeClippedSubviews={true}
+          maxToRenderPerBatch={30}
+          initialNumToRender={30}
+          windowSize={80}
           ref={this.props.forwardRef}
           extraData={[this.props.extraData, this.props.isTyping]}
           keyExtractor={this.keyExtractor}
@@ -364,7 +368,7 @@ export default class MessageContainer<
           scrollEventThrottle={100}
           onLayout={this.onLayoutList}
           onEndReached={this.onEndReached}
-          onEndReachedThreshold={0.1}
+          onEndReachedThreshold={0.5}
           {...this.props.listViewProps}
         />
       </View>
